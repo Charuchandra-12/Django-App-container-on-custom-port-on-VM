@@ -1,0 +1,22 @@
+# docker-compose.yml
+# /var/lib/docker/volumes
+version: "3.8"
+
+services:
+  web:
+    image: chinmaykubal/custom_django_app:latest
+    volumes:
+      - data:/app
+    expose:
+      - "8000"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - web
+volumes:
+  data:
